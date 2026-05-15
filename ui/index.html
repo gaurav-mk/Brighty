@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Brighty</title>
+    <link rel="icon" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Phosphor Icons for premium icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="icon.png" class="logo-img" alt="Brighty Logo">
+                <h1 class="title">Brighty</h1>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn" id="settings-btn"><i class="ph ph-gear"></i></button>
+                <button class="icon-btn close-btn" id="close-btn"><i class="ph ph-x"></i></button>
+            </div>
+        </header>
+
+        <div class="view-stack">
+            <!-- Main View -->
+            <div id="main-view" class="view active">
+                <!-- Weather / Info Section -->
+                <section class="info-section">
+                    <div class="location-weather">
+                        <div class="location">
+                            <i class="ph ph-map-pin"></i>
+                            <span id="location-text">Locating...</span>
+                        </div>
+                        <div class="weather">
+                            <i class="ph ph-cloud-sun" id="weather-icon"></i>
+                            <span id="temperature">--°C</span>
+                        </div>
+                    </div>
+                    <div class="sun-times">
+                        <div class="time-block">
+                            <i class="ph ph-sunrise"></i>
+                            <div class="time-info">
+                                <span class="time-label">Sunrise</span>
+                                <span class="time-value" id="sunrise-time">--:--</span>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <i class="ph ph-sunset"></i>
+                            <div class="time-info">
+                                <span class="time-label">Sunset</span>
+                                <span class="time-value" id="sunset-time">--:--</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Monitors Section -->
+                <section class="monitors-section">
+                    <div class="monitors-header">
+                        <div class="monitors-title">
+                            <h3>Displays</h3>
+                        </div>
+                    </div>
+                    
+                    <div id="monitors-container" class="monitors-list">
+                        <!-- Loading state -->
+                        <div class="loading-monitors">
+                            <i class="ph ph-spinner ph-spin"></i>
+                            <span>Detecting monitors...</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" class="view">
+                <div class="settings-header">
+                    <button class="back-btn" id="back-to-main"><i class="ph ph-arrow-left"></i> Settings</button>
+                </div>
+                
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Brightness Offset</span>
+                            <span class="setting-value" id="offset-val">0</span>
+                        </div>
+                        <p class="setting-description">Fine-tune the auto-brightness level (-20 to +20) for your room conditions.</p>
+                        <input type="range" id="brightness-offset" min="-20" max="20" value="0" style="--val: 50%">
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Launch at Startup</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
