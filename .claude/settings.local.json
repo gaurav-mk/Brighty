@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import webview; print\\(webview.__version__\\)\")",
+      "Bash(python -c \"import webview; print\\(dir\\(webview.Window\\)\\)\")"
+    ]
+  }
+}

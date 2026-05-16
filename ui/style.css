@@ -201,6 +201,40 @@ html, body {
     font-weight: 500;
 }
 
+.refresh-monitors-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary, #888);
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: color 0.2s, background 0.2s;
+    line-height: 1;
+}
+
+.refresh-monitors-btn:hover {
+    color: var(--text-primary, #fff);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.refresh-monitors-btn:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.refresh-monitors-btn.spinning i {
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
 .switch {
     position: relative;
     display: inline-block;

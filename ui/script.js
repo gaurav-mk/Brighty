@@ -126,12 +126,25 @@ async function initApp() {
     }
 
     // Fetch and render monitors
+    await refreshMonitors(api);
+
+    document.getElementById('refresh-monitors-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('refresh-monitors-btn');
+        btn.classList.add('spinning');
+        btn.disabled = true;
+        await refreshMonitors(api);
+        btn.classList.remove('spinning');
+        btn.disabled = false;
+    });
+}
+
+async function refreshMonitors(api) {
     try {
         const monitorsContainer = document.getElementById('monitors-container');
         const monitors = await api.get_monitors();
-        
-        monitorsContainer.innerHTML = ''; // Clear loading
-        
+
+        monitorsContainer.innerHTML = '';
+
         if (monitors.length === 0) {
             monitorsContainer.innerHTML = `
                 <div class="loading-monitors">
@@ -146,10 +159,10 @@ async function initApp() {
             const card = document.createElement('div');
             const modeClass = monitor.auto_adjust ? 'auto-mode' : 'manual-mode';
             card.className = `monitor-card ${modeClass}`;
-            
+
             const iconClass = monitor.name.toLowerCase().includes('generic') || monitor.id > 0 ? 'ph-monitor' : 'ph-laptop';
             const checkedAttr = monitor.auto_adjust ? 'checked' : '';
-            
+
             card.innerHTML = `
                 <div class="monitor-header">
                     <div class="monitor-title-wrapper">
@@ -164,7 +177,7 @@ async function initApp() {
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="sliders-container">
                     <div class="slider-group">
                         <div class="slider-labels">
@@ -183,10 +196,9 @@ async function initApp() {
                     </div>
                 </div>
             `;
-            
+
             monitorsContainer.appendChild(card);
-            
-            // Event listeners
+
             const mToggle = document.getElementById(`auto-toggle-${monitor.id}`);
             mToggle.addEventListener('change', (e) => {
                 const isAuto = e.target.checked;
@@ -194,17 +206,16 @@ async function initApp() {
                 if (isAuto) {
                     card.classList.add('auto-mode');
                     card.classList.remove('manual-mode');
-                    // Force an immediate recalculation when auto is turned on
                     api.force_auto_adjust();
                 } else {
                     card.classList.add('manual-mode');
                     card.classList.remove('auto-mode');
                 }
             });
-            
+
             const debouncedBrightness = debounce((id, val) => api.set_brightness(id, val), 100);
             const debouncedContrast = debounce((id, val) => api.set_contrast(id, val), 100);
-            
+
             const bSlider = document.getElementById(`b-slider-${monitor.id}`);
             const bVal = document.getElementById(`b-val-${monitor.id}`);
             bSlider.addEventListener('input', (e) => {
@@ -213,7 +224,7 @@ async function initApp() {
                 e.target.style.setProperty('--val', `${val}%`);
                 debouncedBrightness(monitor.id, parseInt(val));
             });
-            
+
             const cSlider = document.getElementById(`c-slider-${monitor.id}`);
             const cVal = document.getElementById(`c-val-${monitor.id}`);
             cSlider.addEventListener('input', (e) => {
@@ -223,7 +234,7 @@ async function initApp() {
                 debouncedContrast(monitor.id, parseInt(val));
             });
         });
-        
+
     } catch (e) {
         console.error("Failed to fetch monitors:", e);
     }
